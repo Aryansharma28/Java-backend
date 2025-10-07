@@ -1,0 +1,55 @@
+services:
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: picnic-db
+    environment:
+      MYSQL_DATABASE: picnic
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: picnic
+      MYSQL_PASSWORD: picnic
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - picnic-network
+
+  # Spring Boot Backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: picnic-backend
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/picnic
+      SPRING_DATASOURCE_USERNAME: picnic
+      SPRING_DATASOURCE_PASSWORD: picnic
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create
+      SPRING_SQL_INIT_MODE: always
+    ports:
+      - "8080:8080"
+    networks:
+      - picnic-network
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./picnic-react
+      dockerfile: Dockerfile
+    container_name: picnic-frontend
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    networks:
+      - picnic-network
+
+networks:
+  picnic-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
