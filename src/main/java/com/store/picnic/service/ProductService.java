@@ -20,6 +20,6 @@ public class ProductService {
     }
 
     public List<Product> getProductById(Long id){
-        return productrepo.findByCategoryId(id);
+        return productrepo.findByCategory_Id(id);
     }
 }
