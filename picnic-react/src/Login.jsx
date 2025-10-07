@@ -14,7 +14,7 @@ function Login() {
     setLoading(true)
 
     try {
-      const response = await fetch('http://localhost:8080/api/auth/signin', {
+      const response = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -33,8 +33,12 @@ function Login() {
       localStorage.setItem('username', data.username)
       localStorage.setItem('role', data.role)
 
-      // Redirect to catalog page
-      navigate('/catalog')
+      // Redirect based on role
+      if (data.role === 'ROLE_ADMIN') {
+        navigate('/admin')
+      } else {
+        navigate('/catalog')
+      }
     } catch (err) {
       setError(err.message || 'Login failed. Please try again.')
     } finally {

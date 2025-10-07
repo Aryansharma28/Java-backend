@@ -20,16 +20,33 @@ public class ProductController {
         this.proser = proser;
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping
     public List<Product> getAllProducts(){
         return proser.getAllProducts();
     }
 
-
     @GetMapping("/category/{id}")
     public List<Product> getproductbycategoryid(@PathVariable Long id){
         return proser.getProductById(id);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping
+    public Product createProduct(@RequestBody Product product){
+        return proser.createProduct(product);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}")
+    public Product updateProduct(@PathVariable Long id, @RequestBody Product product){
+        return proser.updateProduct(id, product);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable Long id){
+        proser.deleteProduct(id);
     }
 
 
