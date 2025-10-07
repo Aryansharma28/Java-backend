@@ -1,0 +1,26 @@
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import Login from './Login'
+import Catalog from './Catalog'
+import ProtectedRoute from './ProtectedRoute'
+import './App.css'
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/catalog"
+          element={
+            <ProtectedRoute>
+              <Catalog />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </Router>
+  )
+}
+
+export default App
