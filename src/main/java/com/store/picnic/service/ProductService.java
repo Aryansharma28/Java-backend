@@ -22,4 +22,26 @@ public class ProductService {
     public List<Product> getProductById(Long id){
         return productrepo.findByCategory_Id(id);
     }
+
+    public Product createProduct(Product product){
+        return productrepo.save(product);
+    }
+
+    public Product updateProduct(Long id, Product product){
+        Product existingProduct = productrepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        existingProduct.setName(product.getName());
+        existingProduct.setDescription(product.getDescription());
+        existingProduct.setPrice(product.getPrice());
+        existingProduct.setImageUrl(product.getImageUrl());
+        existingProduct.setQuantity(product.getQuantity());
+        existingProduct.setCategory(product.getCategory());
+
+        return productrepo.save(existingProduct);
+    }
+
+    public void deleteProduct(Long id){
+        productrepo.deleteById(id);
+    }
 }
