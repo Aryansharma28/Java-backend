@@ -125,7 +125,7 @@ function Catalog() {
     <div>
       <nav className="navbar navbar-light bg-light mb-4">
         <div className="container-fluid">
-          <span className="navbar-brand mb-0 h1">Picnic Products</span>
+          <span className="navbar-brand mb-0 h1">Ecomm Products</span>
           <div className="d-flex align-items-center">
             <span className="me-3">Welcome, {localStorage.getItem('username')}</span>
             {localStorage.getItem('role') === 'ROLE_ADMIN' && (

@@ -54,6 +54,7 @@ const ProductList = ({ products = [], cartQuantities = {}, setCartQuantities }) 
                 src={product.imageUrl}
                 className="card-img-top"
                 alt={product.name}
+                style={{ height: '200px', objectFit: 'cover' }}
               />
             ) : (
               <div
