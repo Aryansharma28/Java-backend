@@ -29,8 +29,10 @@ services:
       SPRING_DATASOURCE_PASSWORD: picnic
       SPRING_JPA_HIBERNATE_DDL_AUTO: create
       SPRING_SQL_INIT_MODE: always
+      JWT_SECRET: mySecretKeyForJWTTokenGenerationAndValidation1234567890
+      DB_PASSWORD: picnic
     ports:
-      - "8080:8080"
+      - "8081:8081"
     networks:
       - picnic-network
 

@@ -22,7 +22,7 @@ function Catalog() {
       return
     }
 
-    fetch('http://localhost:8080/api/products', {
+    fetch('http://localhost:8081/api/products', {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -40,7 +40,7 @@ function Catalog() {
       })
       .catch((e) => console.error('Error fetching products:', e))
 
-    fetch('http://localhost:8080/api/categories', {
+    fetch('http://localhost:8081/api/categories', {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -56,7 +56,7 @@ function Catalog() {
       .catch((e) => console.error('Error fetching categories:', e))
 
     // Fetch cart items to get current quantities
-    fetch('http://localhost:8080/api/cart', {
+    fetch('http://localhost:8081/api/cart', {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -113,12 +113,14 @@ function Catalog() {
   const handleSortChange = (e) => setSortOption(e.target.value)
   const handleCategorySelect = (e) => setSelectedCategory(e.target.value || null)
 
-  const handleLogout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('username')
-    localStorage.removeItem('role')
-    navigate('/login')
-  }
+    const handleLogout = () => {
+      if (window.confirm('Are you sure you want to log out?')) {
+        localStorage.removeItem('token')
+        localStorage.removeItem('username')
+        localStorage.removeItem('role')
+        navigate('/login')
+      }}
+
 
 
   return (
@@ -141,8 +143,9 @@ function Catalog() {
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-cart" viewBox="0 0 16 16">
                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
               </svg>
-              Cart
+               Cart ({Object.values(cartQuantities).reduce((sum, qty) => sum + qty, 0)})
             </button>
+
             <button className="btn btn-outline-danger btn-sm" onClick={handleLogout}>
               Logout
             </button>

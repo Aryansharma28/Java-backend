@@ -6,7 +6,7 @@ const ProductList = ({ products = [], cartQuantities = {}, setCartQuantities }) 
   const updateCartAPI = (productId, newQty) => {
     const token = localStorage.getItem('token')
 
-    fetch(`http://localhost:8080/api/cart/product/${productId}`, {
+    fetch(`http://localhost:8081/api/cart/product/${productId}`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,
